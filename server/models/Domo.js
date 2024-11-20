@@ -18,7 +18,7 @@ const DomoSchema = new mongoose.Schema({
   eyeColor: {
     type: String,
     required: true,
-    trim: true
+    trim: true,
   },
   owner: {
     type: mongoose.Schema.ObjectId,

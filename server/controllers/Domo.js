@@ -1,11 +1,8 @@
 const models = require('../models');
-const { findOneAndDelete } = require('../models/Domo');
 
 const { Domo } = models;
 
-const makerPage = (req, res) => {
-  return res.render('app');
-};
+const makerPage = (req, res) => res.render('app');
 
 const getDomos = async (req, res) => {
   try {
@@ -32,7 +29,11 @@ const makeDomo = async (req, res) => {
   try {
     const newDomo = new Domo(domoData);
     await newDomo.save();
-    return res.status(201).json({ name: newDomo.name, age: newDomo.age, eyeColor: newDomo.eyeColor });
+    return res.status(201).json({
+      name: newDomo.name,
+      age: newDomo.age,
+      eyeColor: newDomo.eyeColor,
+    });
   } catch (err) {
     console.log(err);
     if (err.code === 11000) { return res.status(400).json({ error: 'Domo already exists!' }); }
@@ -45,16 +46,16 @@ const deleteDomo = async (req, res) => {
 
   try {
     await Domo.deleteOne({ _id: req.body.id });
-    return res.status(200).json({ content: "Domo deleted" });
-  } catch(error) {
-    console.log(error)
-    return res.status(404).json({ error: "Domo not found!" });
+    return res.status(200).json({ content: 'Domo deleted' });
+  } catch (error) {
+    console.log(error);
+    return res.status(404).json({ error: 'Domo not found!' });
   }
-}
+};
 
 module.exports = {
   makerPage,
   makeDomo,
   getDomos,
-  deleteDomo
+  deleteDomo,
 };
